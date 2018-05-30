@@ -7,12 +7,10 @@ using System.Web.Routing;
 
 namespace Notezilla
 {
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
     }
 }
