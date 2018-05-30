@@ -10,11 +10,15 @@ using Autofac;
 using Autofac.Integration.Mvc;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using Microsoft.Owin.Security.Cookies;
 using NHibernate;
 using NHibernate.Dialect;
 using NHibernate.Tool.hbm2ddl;
 using Notezilla.App_Start;
+using Notezilla.Auth;
 using Notezilla.Controllers;
 using Notezilla.Models.Repositories;
 using Notezilla.Models.Users;
@@ -72,6 +76,18 @@ namespace Notezilla.App_Start
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             app.UseAutofacMiddleware(container);
+
+            app.CreatePerOwinContext(() =>
+                new UserManager(new IdentityStore(DependencyResolver.Current.GetServices<ISession>().FirstOrDefault())));
+            app.CreatePerOwinContext<SignInManager>((options, context) =>
+                new SignInManager(context.GetUserManager<UserManager>(), context.Authentication));
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                LoginPath = new PathString("/Account/Login"),
+                Provider = new CookieAuthenticationProvider()
+            });
         }
     }
 }
