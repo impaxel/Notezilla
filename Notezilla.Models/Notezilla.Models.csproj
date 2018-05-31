@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Mappings\FileMap.cs" />
     <Compile Include="Mappings\NoteMap.cs" />
+    <Compile Include="Mappings\RoleMap.cs" />
     <Compile Include="Mappings\TagMap.cs" />
     <Compile Include="Mappings\UserMap.cs" />
     <Compile Include="Notes\File.cs" />

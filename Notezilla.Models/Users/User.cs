@@ -20,8 +20,13 @@ namespace Notezilla.Models.Users
 
         public virtual File Picture { get; set; }
 
-        public virtual Role Role { get; set; }
+        public virtual ICollection<Role> Roles { get; set; }
 
         public virtual Status Status { get; set; }
+
+        public User()
+        {
+            Roles = new List<Role>();
+        }
     }
 }

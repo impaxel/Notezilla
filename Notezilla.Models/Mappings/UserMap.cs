@@ -16,7 +16,9 @@ namespace Notezilla.Models.Mappings
             Map(u => u.UserName).Length(32);
             Map(u => u.Password).Column("PasswordHash");
             Map(u => u.Name).Length(32);
-            Map(u => u.Role);
+            HasManyToMany(u => u.Roles)
+                .ParentKeyColumn("UserId")
+                .ChildKeyColumn("RoleId");
             Map(u => u.Status);
             References(u => u.Picture);
         }

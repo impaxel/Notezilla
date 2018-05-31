@@ -21,8 +21,14 @@ namespace Notezilla.Models.Notes
 
         public virtual User Author { get; set; }
 
-        public virtual IList<File> Files { get; set; }
+        public virtual ICollection<File> Files { get; set; }
 
-        public virtual IList<Tag> Tags { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
+
+        public Note()
+        {
+            Tags = new List<Tag>();
+            Files = new List<File>();
+        }
     }
 }
