@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using Notezilla.Auth;
 using Notezilla.Models.Repositories;
+using Notezilla.Models.Users;
+using Notezilla.Permission;
 
 namespace Notezilla.Controllers
 {
@@ -23,5 +25,8 @@ namespace Notezilla.Controllers
 
         public UserManager UserManager
             => HttpContext.GetOwinContext().GetUserManager<UserManager>();
+
+        public RoleManager RoleManager
+            => HttpContext.GetOwinContext().Get<RoleManager>();
     }
 }

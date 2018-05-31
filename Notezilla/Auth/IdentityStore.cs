@@ -12,9 +12,10 @@ namespace Notezilla.Auth
     public class IdentityStore : IUserStore<User, long>,
         IUserPasswordStore<User, long>,
         IUserLockoutStore<User, long>,
-        IUserTwoFactorStore<User, long>
+        IUserTwoFactorStore<User, long>,
+        IUserRoleStore<User, long>
     {
-        private readonly ISession session;
+        private ISession session;
 
         public IdentityStore(ISession session)
         {
@@ -24,39 +25,43 @@ namespace Notezilla.Auth
         #region IUserStore<User, int>
         public Task CreateAsync(User user)
         {
-            return Task.Run(() => session.SaveOrUpdate(user));
+            session.Save(user);
+            session.Flush();
+            return Task.FromResult(0);
         }
 
         public Task DeleteAsync(User user)
         {
-            return Task.Run(() => session.Delete(user));
+            session.Delete(user);
+            session.Flush();
+            return Task.FromResult(0);
         }
 
         public Task<User> FindByIdAsync(long userId)
         {
-            return Task.Run(() => session.Get<User>(userId));
+            return Task.FromResult(session.Get<User>(userId));
         }
 
         public Task<User> FindByNameAsync(string username)
         {
-            return Task.Run(() =>
-            {
-                return session.QueryOver<User>()
+            return Task.FromResult(session.QueryOver<User>()
                     .Where(u => u.UserName == username)
-                    .SingleOrDefault();
-            });
+                    .SingleOrDefault());
         }
 
         public Task UpdateAsync(User user)
         {
-            return Task.Run(() => session.SaveOrUpdate(user));
+            session.Update(user);
+            session.Flush();
+            return Task.FromResult(0);
         }
         #endregion
 
         #region IUserPasswordStore<User, int>
         public Task SetPasswordHashAsync(User user, string passwordHash)
         {
-            return Task.Run(() => user.Password = passwordHash);
+            user.Password = passwordHash;
+            return Task.FromResult(0);
         }
 
         public Task<string> GetPasswordHashAsync(User user)
@@ -122,6 +127,37 @@ namespace Notezilla.Auth
         public void Dispose()
         {
             //do nothing
+        }
+
+        public Task AddToRoleAsync(User user, string roleName)
+        {
+            var role = session.QueryOver<Role>()
+                    .Where(r => r.Name == roleName)
+                    .SingleOrDefault();
+            if (!user.Roles.Contains(role))
+            {
+                user.Roles.Add(role);
+            }
+            return Task.FromResult(0);
+        }
+
+        public Task RemoveFromRoleAsync(User user, string roleName)
+        {
+            var role = session.QueryOver<Role>()
+                    .Where(r => r.Name == roleName)
+                    .SingleOrDefault();
+            user.Roles.Remove(role);
+            return Task.FromResult(0);
+        }
+
+        public Task<IList<string>> GetRolesAsync(User user)
+        {
+            return Task.FromResult((IList<string>)user.Roles.Select(r => r.Name).ToList());
+        }
+
+        public Task<bool> IsInRoleAsync(User user, string roleName)
+        {
+            return Task.FromResult(user.Roles.Any(r => r.Name == roleName));
         }
     }
 }

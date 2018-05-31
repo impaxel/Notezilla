@@ -22,6 +22,7 @@ using Notezilla.Auth;
 using Notezilla.Controllers;
 using Notezilla.Models.Repositories;
 using Notezilla.Models.Users;
+using Notezilla.Permission;
 using Owin;
 
 [assembly: OwinStartup(typeof(Startup))]
@@ -50,14 +51,17 @@ namespace Notezilla.App_Start
                         .ConnectionString(connectionString.ConnectionString)
                         .Dialect<MsSql2012Dialect>())
                     .Mappings(m => m.FluentMappings.AddFromAssemblyOf<User>())
-                    .ExposeConfiguration(c => {
+                    .ExposeConfiguration(c =>
+                    {
                         SchemaMetadataUpdater.QuoteTableAndColumns(c);
                     })
                     .CurrentSessionContext("call");
                 var conf = cfg.BuildConfiguration();
                 var schemaExport = new SchemaUpdate(conf);
                 schemaExport.Execute(true, true);
-                return cfg.BuildSessionFactory();
+                ISessionFactory session = cfg.BuildSessionFactory();
+                InitialData(session);
+                return session;
             }).As<ISessionFactory>().SingleInstance();
             builder.Register(x => x.Resolve<ISessionFactory>().OpenSession())
                 .As<ISession>()
@@ -79,6 +83,8 @@ namespace Notezilla.App_Start
 
             app.CreatePerOwinContext(() =>
                 new UserManager(new IdentityStore(DependencyResolver.Current.GetServices<ISession>().FirstOrDefault())));
+            app.CreatePerOwinContext(() =>
+                new RoleManager(new RoleStore(DependencyResolver.Current.GetServices<ISession>().FirstOrDefault())));
             app.CreatePerOwinContext<SignInManager>((options, context) =>
                 new SignInManager(context.GetUserManager<UserManager>(), context.Authentication));
 
@@ -88,6 +94,26 @@ namespace Notezilla.App_Start
                 LoginPath = new PathString("/Account/Login"),
                 Provider = new CookieAuthenticationProvider()
             });
+        }
+
+        public static void InitialData(ISessionFactory sessionFactory)
+        {
+            using (ISession session = sessionFactory.OpenSession())
+            {
+                var roleAdmin = new Role("Admin");
+                var roleUser = new Role("User");
+                var roleManager = new RoleManager(new RoleStore(session));
+                var userManager = new UserManager(new IdentityStore(session));
+                roleManager.CreateAsync(roleUser);
+                roleManager.CreateAsync(roleAdmin);
+                var userAdmin = new User("admin");
+                var result = userManager.CreateAsync(userAdmin, "admin");
+                if (result.Result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(userAdmin.Id, roleAdmin.Name);
+                    userManager.AddToRoleAsync(userAdmin.Id, roleUser.Name);
+                }
+            }
         }
     }
 }

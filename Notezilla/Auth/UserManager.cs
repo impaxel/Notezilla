@@ -15,7 +15,7 @@ namespace Notezilla.Auth
             UserValidator = new UserValidator<User, long>(this);
             PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 6
+                RequiredLength = 5
             };
         }
     }

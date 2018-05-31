@@ -28,5 +28,10 @@ namespace Notezilla.Models.Users
         {
             Roles = new List<Role>();
         }
+
+        public User(string userName) : this()
+        {
+            UserName = userName;
+        }
     }
 }
