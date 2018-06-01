@@ -15,6 +15,7 @@ namespace Notezilla.Models.Mappings
             Id(f => f.Id).GeneratedBy.Identity();
             Map(f => f.Name).Length(32);
             Map(f => f.Path).Length(int.MaxValue);
+            References(f => f.Note).Column("Note_id");
         }
     }
 }

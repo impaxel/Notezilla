@@ -18,15 +18,18 @@ namespace Notezilla.Models.Users
 
         public virtual string Name { get; set; }
 
-        public virtual File Picture { get; set; }
+        public virtual Picture Picture { get; set; }
 
         public virtual ICollection<Role> Roles { get; set; }
+
+        public virtual ICollection<Note> Notes { get; set; }
 
         public virtual Status Status { get; set; }
 
         public User()
         {
             Roles = new List<Role>();
+            Notes = new List<Note>();
         }
 
         public User(string userName) : this()

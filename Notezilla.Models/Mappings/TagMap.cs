@@ -15,8 +15,8 @@ namespace Notezilla.Models.Mappings
             Id(t => t.Id).GeneratedBy.Identity();
             Map(t => t.Name).Length(16);
             HasManyToMany(t => t.Notes)
-                .ParentKeyColumn("TagId")
-                .ChildKeyColumn("NoteId");
+                .ParentKeyColumn("Tag_id")
+                .ChildKeyColumn("Note_id");
         }
     }
 }

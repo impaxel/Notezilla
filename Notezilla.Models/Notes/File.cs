@@ -13,5 +13,7 @@ namespace Notezilla.Models.Notes
         public virtual string Name { get; set; }
 
         public virtual string Path { get; set; }
+
+        public virtual Note Note { get; set; }
     }
 }
