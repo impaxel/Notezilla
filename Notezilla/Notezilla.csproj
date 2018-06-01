@@ -185,7 +185,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\SigninViewModel.cs" />
+    <Compile Include="Models\SignupViewModel.cs" />
     <Compile Include="Permission\RoleManager.cs" />
     <Compile Include="Permission\RoleStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -198,7 +199,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Signin.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Account\Signup.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

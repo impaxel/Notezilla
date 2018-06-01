@@ -6,15 +6,15 @@ using System.Web;
 
 namespace Notezilla.Models
 {
-    public class LoginViewModel
+    public class SigninViewModel
     {
         [Display(Name = "Имя пользователя")]
-        [Required]
+        [Required(ErrorMessage = "Необходимо указать имя пользователя")]
         public string Login { get; set; }
 
         [Display(Name = "Пароль")]
         [DataType(DataType.Password)]
-        [Required]
+        [Required(ErrorMessage = "Необходимо ввести пароль")]
         public string Password { get; set; }
     }
 }

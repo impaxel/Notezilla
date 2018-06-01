@@ -10,21 +10,25 @@ using Notezilla.Models.Users;
 
 namespace Notezilla.Controllers
 {
+    [Authorize]
     public class AccountController : BaseController
     {
         public AccountController(UserRepository userRepository) : base(userRepository)
         {
         }
 
-        public ActionResult Login()
+        [AllowAnonymous]
+        public ActionResult Signin()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Login(LoginViewModel model)
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Signin(SigninViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && !User.Identity.IsAuthenticated)
             {
                 var result = SignInManager.PasswordSignIn(model.Login, model.Password, false, false);
                 if (result == SignInStatus.Success)
@@ -39,41 +43,53 @@ namespace Notezilla.Controllers
             return View(model);
         }
 
-        public ActionResult CreateAccount(string login, string password)
+        [ValidateAntiForgeryToken]
+        public ActionResult Signout()
         {
-            var user = new User
+            SignInManager.SignOut();
+            return RedirectToAction("Index", "Home");
+        }
+
+        [AllowAnonymous]
+        public ActionResult Signup()
+        {
+            if (!User.Identity.IsAuthenticated)
             {
-                UserName = login,
-                Password = password
-            };
-            var result = UserManager.CreateAsync(user, password);
-            if (result.Result.Succeeded)
-            {
-                SignInManager.SignIn(user, false, false);
+                return View();
             }
             else
             {
-                foreach (var error in result.Result.Errors)
-                {
-                    ModelState.AddModelError("", error);
-                }
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Login", "Account");
         }
 
-        //public ActionResult CreateAccount(string login, string password)
-        //{
-        //    var user = new User
-        //    {
-        //        UserName = login,
-        //        Password = password,
-        //        Name = "Вадим"
-        //    };
-        //    userRepository.Save(user);
-        //    return View("Index");
-        //}
 
-        // GET: Account
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Signup(SignupViewModel model)
+        {
+            if (ModelState.IsValid && !User.Identity.IsAuthenticated)
+            {
+                var user = new User(model.Login);
+                var result = UserManager.CreateAsync(user, model.Password);
+                if (result.Result.Succeeded)
+                {
+                    UserManager.AddToRoleAsync(user.Id, "User");
+                    SignInManager.SignIn(user, false, false);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    foreach (var error in result.Result.Errors)
+                    {
+                        ModelState.AddModelError("", error);
+                    }
+                }
+            }
+            return View(model);
+        }
+
         public ActionResult Index()
         {
             return View();
