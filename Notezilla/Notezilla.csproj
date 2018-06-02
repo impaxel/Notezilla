@@ -182,9 +182,12 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NoteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\NoteEditViewModel.cs" />
+    <Compile Include="Models\NoteListViewModel.cs" />
     <Compile Include="Models\SigninViewModel.cs" />
     <Compile Include="Models\SignupViewModel.cs" />
     <Compile Include="Permission\RoleManager.cs" />
@@ -202,6 +205,8 @@
     <Content Include="Views\Account\Signin.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\Signup.cshtml" />
+    <Content Include="Views\Note\Create.cshtml" />
+    <Content Include="Views\Note\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

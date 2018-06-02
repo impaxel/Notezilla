@@ -13,10 +13,10 @@ namespace Notezilla.Models.Mappings
         public TagMap()
         {
             Id(t => t.Id).GeneratedBy.Identity();
-            Map(t => t.Name).Length(16);
-            HasManyToMany(t => t.Notes)
-                .ParentKeyColumn("Tag_id")
-                .ChildKeyColumn("Note_id");
+            Map(t => t.Name).Length(16).Unique();
+            //HasManyToMany(t => t.Notes)
+            //    .ParentKeyColumn("Tag_id")
+            //    .ChildKeyColumn("Note_id");
         }
     }
 }

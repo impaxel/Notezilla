@@ -1,0 +1,22 @@
+﻿@model Notezilla.Models.NoteListViewModel
+@{
+    ViewBag.Title = "Список пользователей";
+}
+
+<h2>Список пользователей</h2>
+
+<table>
+    <tr>
+        <td>Идентификатор</td>
+        <td>Имя</td>
+        <td>Логин</td>
+    </tr>
+    @foreach (var note in Model.Notes)
+    {
+        <tr>
+            <td>@note.Id</td>
+            <td>@note.Title</td>
+            <td>@note.Tags</td>
+        </tr>
+    }
+</table>

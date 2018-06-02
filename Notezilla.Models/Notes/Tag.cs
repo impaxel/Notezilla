@@ -12,11 +12,11 @@ namespace Notezilla.Models.Notes
 
         public virtual string Name { get; set; }
 
-        public virtual ICollection<Note> Notes { get; set; }
+        //public virtual ICollection<Note> Notes { get; set; }
 
-        public Tag()
-        {
-            Notes = new List<Note>();
-        }
+        //public Tag()
+        //{
+        //    Notes = new List<Note>();
+        //}
     }
 }

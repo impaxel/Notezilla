@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NHibernate;
+using NHibernate.Criterion;
+using Notezilla.Models.Notes;
 
 namespace Notezilla.Models.Repositories
 {
-    public abstract class Repository<T> where T: class
+    public abstract class Repository<T> where T : class
     {
         protected ISession session;
 
@@ -25,7 +27,7 @@ namespace Notezilla.Models.Repositories
         {
             using (var tr = session.BeginTransaction())
             {
-                session.Save(entity);
+                session.SaveOrUpdate(entity);
                 tr.Commit();
             }
         }
@@ -37,6 +39,12 @@ namespace Notezilla.Models.Repositories
                 session.Update(entity);
                 tr.Commit();
             }
+        }
+
+        public virtual IList<T> GetAll()
+        {
+            var crit = session.CreateCriteria<T>();
+            return crit.List<T>();
         }
     }
 }

@@ -59,6 +59,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,16 +68,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Listeners\ListenerAttribute.cs" />
+    <Compile Include="Listeners\PreInsertNoteEventListener.cs" />
+    <Compile Include="Listeners\PreUpdateNoteEventListener.cs" />
     <Compile Include="Mappings\FileMap.cs" />
     <Compile Include="Mappings\NoteMap.cs" />
     <Compile Include="Mappings\PictureMap.cs" />
     <Compile Include="Mappings\RoleMap.cs" />
-    <Compile Include="Mappings\TagMap.cs" />
     <Compile Include="Mappings\UserMap.cs" />
     <Compile Include="Notes\File.cs" />
     <Compile Include="Notes\Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Notes\Tag.cs" />
     <Compile Include="Repositories\NoteRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\RepositoryAttribute.cs" />

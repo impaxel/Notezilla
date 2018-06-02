@@ -23,11 +23,10 @@ namespace Notezilla.Models.Notes
 
         public virtual ICollection<File> Files { get; set; }
 
-        public virtual ICollection<Tag> Tags { get; set; }
+        public virtual string Tags { get; set; }
 
         public Note()
         {
-            Tags = new List<Tag>();
             Files = new List<File>();
         }
     }
