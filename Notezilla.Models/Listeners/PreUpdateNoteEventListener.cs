@@ -10,6 +10,7 @@ using Notezilla.Models.Repositories;
 
 namespace Notezilla.Models.Listeners
 {
+    [Listener]
     public class PreUpdateNoteEventListener : IPreUpdateEventListener
     {
         public bool OnPreUpdate(PreUpdateEvent @event)
@@ -24,8 +25,7 @@ namespace Notezilla.Models.Listeners
 
         private bool SetProps(PreUpdateEvent @event)
         {
-            var note = @event.Entity as Note;
-            if (note != null)
+            if (@event.Entity is Note note)
             {
                 note.ChangeDate = DateTime.Now;
             }

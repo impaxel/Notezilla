@@ -16,10 +16,12 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using NHibernate;
 using NHibernate.Dialect;
+using NHibernate.Event;
 using NHibernate.Tool.hbm2ddl;
 using Notezilla.App_Start;
 using Notezilla.Auth;
 using Notezilla.Controllers;
+using Notezilla.Models.Listeners;
 using Notezilla.Models.Repositories;
 using Notezilla.Models.Users;
 using Notezilla.Permission;
@@ -44,6 +46,20 @@ namespace Notezilla.App_Start
             var assembly = Assembly.GetAssembly(typeof(User));
             var builder = new ContainerBuilder();
 
+            foreach (var type in assembly.GetTypes())
+            {
+                var attr = (ListenerAttribute)type.GetCustomAttribute(typeof(ListenerAttribute));
+                if (attr != null)
+                {
+                    var interfaces = type.GetInterfaces();
+                    var b = builder.RegisterType(type);
+                    foreach (var inter in interfaces)
+                    {
+                        b = b.As(inter);
+                    }
+                }
+            }
+
             builder.Register(x =>
             {
                 var cfg = Fluently.Configure()
@@ -54,6 +70,8 @@ namespace Notezilla.App_Start
                     .ExposeConfiguration(c =>
                     {
                         SchemaMetadataUpdater.QuoteTableAndColumns(c);
+                        c.EventListeners.PreInsertEventListeners = x.Resolve<IPreInsertEventListener[]>();
+                        c.EventListeners.PreUpdateEventListeners = x.Resolve<IPreUpdateEventListener[]>();
                     })
                     .CurrentSessionContext("call");
                 var conf = cfg.BuildConfiguration();
@@ -66,6 +84,9 @@ namespace Notezilla.App_Start
             builder.Register(x => x.Resolve<ISessionFactory>().OpenSession())
                 .As<ISession>()
                 .InstancePerRequest();
+            //builder.Register(x => x.Resolve<ISessionFactory>().OpenSession())
+            //    .As<ISession>()
+            //    .InstancePerDependency();
             builder.RegisterControllers(Assembly.GetAssembly(typeof(BaseController)));
             builder.RegisterModule(new AutofacWebTypesModule());
             foreach (var type in assembly.GetTypes())

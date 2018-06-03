@@ -25,8 +25,7 @@ namespace Notezilla.Models.Listeners
 
         private bool SetCreationProps(PreInsertEvent @event)
         {
-            var note = @event.Entity as Note;
-            if (note != null)
+            if (@event.Entity is Note note)
             {
                 note.CreationDate = DateTime.Now;
             }

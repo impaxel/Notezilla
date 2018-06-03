@@ -13,6 +13,7 @@ namespace Notezilla.Models
         public string Title { get; set; }
 
         [Display(Name = "Заметка")]
+        [DataType(DataType.MultilineText)]
         public string Text { get; set; }
 
         [Display(Name = "Теги")]
