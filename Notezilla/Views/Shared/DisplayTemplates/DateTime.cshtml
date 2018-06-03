@@ -1,0 +1,6 @@
+﻿@model DateTime
+
+@{ 
+    IFormatProvider formatProvider = new System.Globalization.CultureInfo("ru-RU");
+}
+@Model.ToString("d", formatProvider)

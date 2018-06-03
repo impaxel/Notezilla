@@ -1,22 +1,25 @@
 ﻿@model Notezilla.Models.NoteListViewModel
 @{
-    ViewBag.Title = "Список пользователей";
+    ViewBag.Title = "Мои заметки";
 }
 
-<h2>Список пользователей</h2>
+<h2>@ViewBag.Title</h2>
 
-<table>
-    <tr>
-        <td>Идентификатор</td>
-        <td>Имя</td>
-        <td>Логин</td>
-    </tr>
-    @foreach (var note in Model.Notes)
-    {
+<hr />
+<table class="table">
+    <thead>
         <tr>
-            <td>@note.Id</td>
-            <td>@note.Title</td>
-            <td>@note.Tags</td>
+            <th>Название</th>
+            <th>Дата создания</th>
+            <th>Дата изменения</th>
+            <th>Вложенные файлы</th>
+            <th>Теги</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @Html.DisplayFor(model => model.Notes)
+    </tbody>
 </table>
+<div class="container">
+    <a href="@Url.Action("Create")" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span> Новая заметка</a>
+</div>

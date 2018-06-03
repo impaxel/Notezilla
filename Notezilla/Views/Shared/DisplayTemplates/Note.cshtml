@@ -1,0 +1,20 @@
+﻿@model Notezilla.Models.Notes.Note
+
+<tr>
+    <td>
+        @Html.ActionLink(Model.Title, "Note", "Note")
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.CreationDate)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.ChangeDate)
+    </td>
+    <td>
+        @Model.Files.Count
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.Tags, "Tags")
+    </td>
+</tr>
+
