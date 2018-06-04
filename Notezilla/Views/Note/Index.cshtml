@@ -6,20 +6,30 @@
 <h2>@ViewBag.Title</h2>
 
 <hr />
-<table class="table">
-    <thead>
-        <tr>
-            <th>Название</th>
-            <th>Дата создания</th>
-            <th>Дата изменения</th>
-            <th>Вложенные файлы</th>
-            <th>Теги</th>
-        </tr>
-    </thead>
-    <tbody>
-        @Html.DisplayFor(model => model.Notes)
-    </tbody>
-</table>
-<div class="container">
-    <a href="@Url.Action("Create")" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span> Новая заметка</a>
-</div>
+@if (Model.Notes.Count != 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Дата создания</th>
+                <th>Дата изменения</th>
+                <th>Вложенные файлы</th>
+                <th>Теги</th>
+            </tr>
+        </thead>
+        <tbody>
+            @Html.DisplayFor(model => model.Notes)
+        </tbody>
+    </table>
+    <div class="container">
+        <a href="@Url.Action("Create")" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span> Новая заметка</a>
+    </div>
+}
+else
+{
+    <p class="text-center">У вас нет ни одной заметки</p>
+    <div class="container">
+        <a href="@Url.Action("Create")" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span> Новая заметка</a>
+    </div>
+}

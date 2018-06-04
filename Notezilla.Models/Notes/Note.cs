@@ -17,7 +17,7 @@ namespace Notezilla.Models.Notes
 
         public virtual DateTime CreationDate { get; set; }
 
-        public virtual DateTime ChangeDate { get; set; }
+        public virtual DateTime? ChangeDate { get; set; } = null;
 
         public virtual User Author { get; set; }
 

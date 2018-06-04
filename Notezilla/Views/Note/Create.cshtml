@@ -6,10 +6,10 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Note", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -39,9 +39,20 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Files, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Files, new { style="padding:7px", type = "file", multiple = "multiple" })
+                @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Создать заметку" class="btn btn-default" />
+                <input type="submit" value="Создать заметку" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
+<script>
+    function
+</script>

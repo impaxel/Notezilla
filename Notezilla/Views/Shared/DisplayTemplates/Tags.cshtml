@@ -1,6 +1,9 @@
 ﻿@model string
 
-@foreach (var tag in Model.Split(','))
+@if (Model != null)
 {
-    <button class="btn btn-default btn-xs">@tag.Trim()</button>
+    foreach (var tag in Model.Split(','))
+    {
+        <button class="btn btn-default btn-xs">@tag.Trim()</button>
+    }
 }

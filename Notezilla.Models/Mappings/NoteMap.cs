@@ -19,11 +19,7 @@ namespace Notezilla.Models.Mappings
             Map(n => n.CreationDate);
             Map(n => n.Tags).Length(int.MaxValue);
             References(n => n.Author).Column("User_id");
-            HasMany(n => n.Files).KeyColumn("Note_id");
-            //HasManyToMany(n => n.Tags)
-            //    .ParentKeyColumn("Note_id")
-            //    .ChildKeyColumn("Tag_id")
-            //    .Cascade.All();
+            HasMany(n => n.Files).KeyColumn("Note_id").Cascade.All();
         }
     }
 }

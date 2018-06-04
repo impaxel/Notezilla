@@ -18,5 +18,14 @@ namespace Notezilla.Models
 
         [Display(Name = "Теги")]
         public string Tags { get; set; }
+
+        [DataType(DataType.Upload)]
+        [Display(Name = "Добавить файлы")]
+        public ICollection<HttpPostedFileBase> Files { get; set; }
+
+        public NoteEditViewModel()
+        {
+            Files = new List<HttpPostedFileBase>();
+        }
     }
 }

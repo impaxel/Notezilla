@@ -13,7 +13,7 @@ namespace Notezilla.Models.Mappings
         public FileMap()
         {
             Id(f => f.Id).GeneratedBy.Identity();
-            Map(f => f.Name).Length(32);
+            Map(f => f.Name).Length(255);
             Map(f => f.Path).Length(int.MaxValue);
             References(f => f.Note).Column("Note_id");
         }

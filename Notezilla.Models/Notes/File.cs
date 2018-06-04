@@ -15,5 +15,16 @@ namespace Notezilla.Models.Notes
         public virtual string Path { get; set; }
 
         public virtual Note Note { get; set; }
+
+        public File()
+        {
+
+        }
+
+        public File(string name, string path) : this()
+        {
+            Name = name;
+            Path = path;
+        }
     }
 }

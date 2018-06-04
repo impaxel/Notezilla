@@ -1,0 +1,24 @@
+﻿@model Notezilla.Models.UserListViewModel
+@{
+    ViewBag.Title = "Управление пользователями";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Имя пользователя</th>
+            <th>Дата регистрации</th>
+            <th>Статус</th>
+            <th>Роли</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @Html.DisplayFor(model => model.Users)
+    </tbody>
+</table>

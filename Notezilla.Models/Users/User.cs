@@ -16,15 +16,13 @@ namespace Notezilla.Models.Users
 
         public virtual string Password { get; set; }
 
-        public virtual string Name { get; set; }
-
-        public virtual Picture Picture { get; set; }
+        public virtual DateTime RegistrationDate { get; set; }
 
         public virtual ICollection<Role> Roles { get; set; }
 
         public virtual ICollection<Note> Notes { get; set; }
 
-        public virtual Status Status { get; set; }
+        public virtual bool IsEnabled { get; set; } = true;
 
         public User()
         {

@@ -12,6 +12,6 @@ namespace Notezilla.Models.Users
 
         public virtual User User { get; set; }
 
-        public virtual byte[] Content { get; set; }
+        public virtual string Content { get; set; }
     }
 }

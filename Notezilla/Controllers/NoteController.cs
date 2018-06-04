@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -29,13 +30,29 @@ namespace Notezilla.Controllers
         {
             if (ModelState.IsValid)
             {
+                var files = new List<Models.Notes.File>();
+                string filePath = Server.MapPath($"~/Uploaded Files/{ User.Identity.Name }/");
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+                foreach (var file in model.Files)
+                {
+                    if (file != null)
+                    {
+                        string fileName = Path.GetFileName(file.FileName);
+                        file.SaveAs(filePath + fileName);
+                        files.Add(new Models.Notes.File(fileName, filePath));
+                    }
+                }
                 var user = userRepository.GetCurrentUser(User);
                 var note = new Note
                 {
                     Title = model.Title,
                     Text = model.Text,
                     Tags = model.Tags,
-                    Author = user
+                    Author = user,
+                    Files = files
                 };
                 noteRepository.Save(note);
                 return RedirectToAction("Index");
@@ -49,7 +66,7 @@ namespace Notezilla.Controllers
             var user = userRepository.GetCurrentUser(User);
             var model = new NoteListViewModel
             {
-                Notes = noteRepository.GetAll(user)
+                Notes = user.Notes
             };
             return View(model);
         }

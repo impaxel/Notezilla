@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using NHibernate.Event;
 using Notezilla.Models.Notes;
 using Notezilla.Models.Repositories;
+using Notezilla.Models.Users;
 
 namespace Notezilla.Models.Listeners
 {
@@ -28,6 +29,11 @@ namespace Notezilla.Models.Listeners
             if (@event.Entity is Note note)
             {
                 note.CreationDate = DateTime.Now;
+                note.ChangeDate = DateTime.Now;
+            }
+            else if (@event.Entity is User user)
+            {
+                user.RegistrationDate = DateTime.Now;
             }
             return false;
         }

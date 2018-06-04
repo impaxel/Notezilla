@@ -153,7 +153,6 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\logo.png" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -186,6 +185,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NoteController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -193,6 +193,7 @@
     <Compile Include="Models\NoteListViewModel.cs" />
     <Compile Include="Models\SigninViewModel.cs" />
     <Compile Include="Models\SignupViewModel.cs" />
+    <Compile Include="Models\UserListViewModel.cs" />
     <Compile Include="Permission\RoleManager.cs" />
     <Compile Include="Permission\RoleStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -213,6 +214,9 @@
     <Content Include="Views\Shared\DisplayTemplates\Note.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Tags.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
+    <Content Include="Views\User\Manage.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\User.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Role.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
