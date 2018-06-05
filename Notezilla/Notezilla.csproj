@@ -217,6 +217,7 @@
     <Content Include="Views\User\Manage.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\User.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Role.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\UserStatus.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

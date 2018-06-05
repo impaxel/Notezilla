@@ -4,13 +4,18 @@
     <td>@Model.Id</td>
     <td>@Model.UserName</td>
     <td>@Html.DisplayFor(model => model.RegistrationDate)</td>
-    <td>@Model.IsEnabled</td>
+    <td>@Html.DisplayFor(model => model.IsEnabled, "UserStatus")</td>
     <td>@Html.DisplayFor(model => model.Roles)</td>
     <td>
-        <div class="btn-group pull-right">
-            <a class="btn btn-default"><span class="glyphicon glyphicon-list-alt"></span> Заметки</a>
-            <a class="btn btn-default"> Инфо</a>
-            <a class="btn btn-danger"><span class="glyphicon glyphicon-ban-circle"></span> Заблокировать</a>
+        <div class="pull-right">
+            @if (Model.IsEnabled)
+            {
+                <a href="@Url.Action("LockUnlock", "User", new { userId = Model.Id })" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-ban-circle"></span>  Заблокировать</a>
+            }
+            else
+            {
+                <a href="@Url.Action("LockUnlock", "User", new { userId = Model.Id })" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-ok-circle"></span> Разблокировать</a>
+            }
         </div>
     </td>
 </tr>

@@ -25,6 +25,15 @@ namespace Notezilla.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
+        public ActionResult LockUnlock(long userId)
+        {
+            var user = userRepository.Load(userId);
+            user.IsEnabled = !user.IsEnabled;
+            userRepository.Update(user);
+            return RedirectToAction("Manage");
+        }
+
         // GET: User
         public ActionResult Index()
         {

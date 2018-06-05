@@ -22,14 +22,11 @@
             @Html.DisplayFor(model => model.Notes)
         </tbody>
     </table>
-    <div class="container">
-        <a href="@Url.Action("Create")" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span> Новая заметка</a>
-    </div>
 }
 else
 {
     <p class="text-center">У вас нет ни одной заметки</p>
-    <div class="container">
-        <a href="@Url.Action("Create")" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span> Новая заметка</a>
-    </div>
 }
+<div class="container">
+    <a href="@Url.Action("Create")" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span> Новая заметка</a>
+</div>

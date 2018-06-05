@@ -31,13 +31,19 @@ namespace Notezilla.Controllers
             if (ModelState.IsValid && !User.Identity.IsAuthenticated)
             {
                 var result = SignInManager.PasswordSignInAsync(model.Login, model.Password, false, false).Result;
-                if (result == SignInStatus.Success)
+                switch (result)
                 {
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Неверное имя пользователя или пароль");
+                    case SignInStatus.Success:
+                        return RedirectToAction("Index", "Home");
+                    case SignInStatus.LockedOut:
+                        ModelState.AddModelError("", "Аккаунт заблокирован");
+                        break;
+                    case SignInStatus.Failure:
+                        ModelState.AddModelError("", "Неверное имя пользователя или пароль");
+                        break;
+                    case SignInStatus.RequiresVerification:
+                        ModelState.AddModelError("", "Требуется дополнительная верификация");
+                        break;
                 }
             }
             return View(model);
