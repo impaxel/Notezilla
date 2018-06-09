@@ -12,5 +12,7 @@ namespace Notezilla.Models
         public string SortExpression { get; set; }
 
         public SortDirection SortDirection { get; set; }
+
+        public string SearchQuery { get; set; }
     }
 }

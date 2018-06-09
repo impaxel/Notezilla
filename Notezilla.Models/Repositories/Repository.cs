@@ -50,6 +50,10 @@ namespace Notezilla.Models.Repositories
                     Order.Asc(options.SortExpression) :
                     Order.Desc(options.SortExpression));
             }
+            if (!string.IsNullOrEmpty(options.SearchQuery))
+            {
+                crit.Add(Restrictions.Like("Title", options.SearchQuery, MatchMode.Anywhere));
+            }
         }
 
         public virtual IList<T> GetAll(FetchOptions options = null)

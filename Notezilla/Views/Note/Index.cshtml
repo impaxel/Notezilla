@@ -4,7 +4,14 @@
     ViewBag.Title = "Мои заметки";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2 style="display:inline-block; margin-bottom:0px">@ViewBag.Title</h2>
+@using (Html.BeginForm("Index", "Note", FormMethod.Get, new { @class = "form-inline pull-right", style = "margin-top:20px" }))
+{
+    <div class="form-group">
+        <input placeholder="Найти по названию..." name="SearchQuery" type="text" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Найти</button>
+}
 
 <hr />
 @if (Model.Notes.Count != 0)
@@ -26,7 +33,7 @@
 }
 else
 {
-    <p class="text-center">У вас нет ни одной заметки</p>
+    <p class="text-center">Заметок нет</p>
 }
 <div class="container">
     <a href="@Url.Action("Create")" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span> Новая заметка</a>
