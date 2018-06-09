@@ -23,12 +23,7 @@ namespace Notezilla.Models.Repositories
             var crit = session.CreateCriteria<Note>().Add(Restrictions.Eq("Author", user));
             if (options != null)
             {
-                if (!string.IsNullOrEmpty(options.SortExpression))
-                {
-                    crit.AddOrder(options.SortDirection == SortDirection.Ascending ?
-                        Order.Asc(options.SortExpression) :
-                        Order.Desc(options.SortExpression));
-                }
+                SetFetchOptions(crit, options);
             }
             return crit.List<Note>();
         }

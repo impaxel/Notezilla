@@ -42,17 +42,22 @@ namespace Notezilla.Models.Repositories
             }
         }
 
+        protected virtual void SetFetchOptions(ICriteria crit, FetchOptions options)
+        {
+            if (!string.IsNullOrEmpty(options.SortExpression))
+            {
+                crit.AddOrder(options.SortDirection == SortDirection.Ascending ?
+                    Order.Asc(options.SortExpression) :
+                    Order.Desc(options.SortExpression));
+            }
+        }
+
         public virtual IList<T> GetAll(FetchOptions options = null)
         {
             var crit = session.CreateCriteria<T>();
             if (options != null)
             {
-                if (!string.IsNullOrEmpty(options.SortExpression))
-                {
-                    crit.AddOrder(options.SortDirection == SortDirection.Ascending ?
-                        Order.Asc(options.SortExpression) :
-                        Order.Desc(options.SortExpression));
-                }
+                SetFetchOptions(crit, options);
             }
             return crit.List<T>();
         }
