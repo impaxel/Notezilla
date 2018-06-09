@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using NHibernate;
 using NHibernate.Criterion;
 using Notezilla.Models.Notes;
@@ -41,9 +42,18 @@ namespace Notezilla.Models.Repositories
             }
         }
 
-        public virtual IList<T> GetAll()
+        public virtual IList<T> GetAll(FetchOptions options = null)
         {
             var crit = session.CreateCriteria<T>();
+            if (options != null)
+            {
+                if (!string.IsNullOrEmpty(options.SortExpression))
+                {
+                    crit.AddOrder(options.SortDirection == SortDirection.Ascending ?
+                        Order.Asc(options.SortExpression) :
+                        Order.Desc(options.SortExpression));
+                }
+            }
             return crit.List<T>();
         }
     }

@@ -1,0 +1,16 @@
+﻿@model Notezilla.Models.SortLinkModel
+
+<a href="@Url.Action(Model.ActionName, Model.ControllerName, Model.RouteValues)">
+    @Model.LinkText
+    @if (Model.SortDirection.HasValue)
+    {
+        if (Model.SortDirection.Value == System.Web.UI.WebControls.SortDirection.Ascending)
+        {
+            <span class="glyphicon glyphicon-chevron-down"></span>
+        }
+        else
+        {
+            <span class="glyphicon glyphicon-chevron-up"></span>
+        }
+    }
+</a>

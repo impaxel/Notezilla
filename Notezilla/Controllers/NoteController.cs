@@ -61,12 +61,13 @@ namespace Notezilla.Controllers
         }
 
         // GET: Note
-        public ActionResult Index()
+        public ActionResult Index(FetchOptions options)
         {
             var user = userRepository.GetCurrentUser(User);
+            var notes = noteRepository.GetAllByUser(user, options);
             var model = new NoteListViewModel
             {
-                Notes = user.Notes
+                Notes = notes
             };
             return View(model);
         }

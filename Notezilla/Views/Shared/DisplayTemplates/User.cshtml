@@ -10,7 +10,7 @@
         <div class="pull-right">
             @if (Model.IsEnabled)
             {
-                <a href="@Url.Action("LockUnlock", "User", new { userId = Model.Id })" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-ban-circle"></span>  Заблокировать</a>
+                <a href="@Url.Action("LockUnlock", "User", new { userId = Model.Id })" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-ban-circle"></span> Заблокировать</a>
             }
             else
             {

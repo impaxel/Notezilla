@@ -1,4 +1,5 @@
-﻿@model Notezilla.Models.NoteListViewModel
+﻿@using Notezilla.Extensions
+@model Notezilla.Models.NoteListViewModel
 @{
     ViewBag.Title = "Мои заметки";
 }
@@ -11,11 +12,11 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Название</th>
-                <th>Дата создания</th>
-                <th>Дата изменения</th>
-                <th>Вложенные файлы</th>
+                <th>@Html.SortLink("Название", "Title", "Index", "Note")</th>
+                <th>@Html.SortLink("Дата создания", "CreationDate", "Index", "Note")</th>
+                <th>@Html.SortLink("Дата изменения", "ChangeDate", "Index", "Note")</th>
                 <th>Теги</th>
+                <th>Посмотреть файлы</th>
             </tr>
         </thead>
         <tbody>

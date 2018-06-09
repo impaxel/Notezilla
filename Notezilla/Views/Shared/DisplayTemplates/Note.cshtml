@@ -2,7 +2,7 @@
 
 <tr>
     <td>
-        @Html.ActionLink(Model.Title, "Note", "Note")
+        <a href="#">@Html.DisplayFor(model => model.Title, "Title")</a>
     </td>
     <td>
         @Html.DisplayFor(model => model.CreationDate)
@@ -11,10 +11,10 @@
         @Html.DisplayFor(model => model.ChangeDate)
     </td>
     <td>
-        @Model.Files.Count
+        @Html.DisplayFor(model => model.Tags, "Tags")
     </td>
     <td>
-        @Html.DisplayFor(model => model.Tags, "Tags")
+        @Model.Files.Count
     </td>
 </tr>
 

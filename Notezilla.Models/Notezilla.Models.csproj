@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FetchOptions.cs" />
     <Compile Include="Listeners\ListenerAttribute.cs" />
     <Compile Include="Listeners\PreInsertNoteEventListener.cs" />
     <Compile Include="Listeners\PreUpdateNoteEventListener.cs" />
