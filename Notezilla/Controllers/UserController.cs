@@ -16,11 +16,11 @@ namespace Notezilla.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult Manage()
+        public ActionResult Manage(FetchOptions options)
         {
             var model = new UserListViewModel
             {
-                Users = userRepository.GetAll()
+                Users = userRepository.GetAll(options)
             };
             return View(model);
         }

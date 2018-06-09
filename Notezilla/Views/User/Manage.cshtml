@@ -1,4 +1,5 @@
-﻿@model Notezilla.Models.UserListViewModel
+﻿@using Notezilla.Extensions
+@model Notezilla.Models.UserListViewModel
 @{
     ViewBag.Title = "Управление пользователями";
 }
@@ -10,11 +11,11 @@
 <table class="table">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Имя пользователя</th>
-            <th>Дата регистрации</th>
-            <th>Статус</th>
-            <th>Роли</th>
+            <th>@Html.SortLink("ID", "Id")</th>
+            <th>@Html.SortLink("Имя пользователя", "UserName")</th>
+            <th>@Html.SortLink("Дата регистрации", "RegistrationDate")</th>
+            <th>@Html.SortLink("Статус", "IsEnabled")</th>
+            <th>@Html.SortLink("Роли", "Roles")</th>
             <th></th>
         </tr>
     </thead>

@@ -12,8 +12,11 @@ namespace Notezilla.Extensions
 {
     public static class HtmlExtensions
     {
-        public static MvcHtmlString SortLink(this HtmlHelper html, string linkText, string sortExpression, string actionName, string controllerName)
+        public static MvcHtmlString SortLink(this HtmlHelper html, string linkText, string sortExpression)
         {
+            var controller = html.ViewContext.RouteData.Values["controller"].ToString();
+            var action = html.ViewContext.RouteData.Values["action"].ToString();
+
             var routeValues = new RouteValueDictionary();
             SortDirection? sort = null;
             var sortDirectionStr = html.ViewContext.HttpContext.Request["SortDirection"];
@@ -30,8 +33,8 @@ namespace Notezilla.Extensions
                 SortDirection.Descending : SortDirection.Ascending;
             return html.Partial("SortLink", new SortLinkModel
             {
-                ActionName = actionName,
-                ControllerName = controllerName,
+                ActionName = action,
+                ControllerName = controller,
                 SortDirection = sort,
                 RouteValues = routeValues,
                 LinkText = linkText
