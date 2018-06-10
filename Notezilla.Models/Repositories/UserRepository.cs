@@ -26,11 +26,11 @@ namespace Notezilla.Models.Repositories
                 return null;
             }
             var currentUserId = user.Identity.GetUserId();
-            if (string.IsNullOrEmpty(currentUserId) || !long.TryParse(currentUserId, out long userId))
+            if (string.IsNullOrEmpty(currentUserId))
             {
                 return null;
             }
-            return Load(userId);
+            return Load(currentUserId);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Notezilla.Models.Repositories
             this.session = session;
         }
 
-        public virtual T Load(long id)
+        public virtual T Load(string id)
         {
             return session.Load<T>(id);
         }

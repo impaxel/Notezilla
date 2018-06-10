@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Notezilla.Auth;
+using Microsoft.Owin.Security;
+using NHibernate.AspNet.Identity;
 using Notezilla.Models.Repositories;
 using Notezilla.Models.Users;
-using Notezilla.Permission;
 
 namespace Notezilla.Controllers
 {
@@ -20,13 +21,16 @@ namespace Notezilla.Controllers
             this.userRepository = userRepository;
         }
 
-        public SignInManager SignInManager
-            => HttpContext.GetOwinContext().Get<SignInManager>();
+        public SignInManager<User, string> SignInManager
+            => HttpContext.GetOwinContext().Get<SignInManager<User, string>>();
 
-        public UserManager UserManager
-            => HttpContext.GetOwinContext().GetUserManager<UserManager>();
+        public UserManager<User> UserManager
+            => HttpContext.GetOwinContext().GetUserManager<UserManager<User>>();
 
-        public RoleManager RoleManager
-            => HttpContext.GetOwinContext().Get<RoleManager>();
+        public RoleManager<IdentityRole> RoleManager
+            => HttpContext.GetOwinContext().Get<RoleManager<IdentityRole>>();
+
+        public IAuthenticationManager AuthenticationManager
+            => HttpContext.GetOwinContext().Authentication;
     }
 }

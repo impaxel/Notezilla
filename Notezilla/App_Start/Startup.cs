@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
@@ -10,21 +11,25 @@ using Autofac;
 using Autofac.Integration.Mvc;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using FluentNHibernate.Conventions.Helpers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using NHibernate;
+using NHibernate.AspNet.Identity;
+using NHibernate.AspNet.Identity.Helpers;
+using NHibernate.Cfg.MappingSchema;
 using NHibernate.Dialect;
 using NHibernate.Event;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Tool.hbm2ddl;
 using Notezilla.App_Start;
-using Notezilla.Auth;
 using Notezilla.Controllers;
 using Notezilla.Models.Listeners;
+using Notezilla.Models.Notes;
 using Notezilla.Models.Repositories;
 using Notezilla.Models.Users;
-using Notezilla.Permission;
 using Owin;
 
 [assembly: OwinStartup(typeof(Startup))]
@@ -59,17 +64,18 @@ namespace Notezilla.App_Start
                     }
                 }
             }
-
+            Type[] types = new Type[] { typeof(User) };
             builder.Register(x =>
             {
                 var cfg = Fluently.Configure()
                     .Database(MsSqlConfiguration.MsSql2012
                         .ConnectionString(connectionString.ConnectionString)
                         .Dialect<MsSql2012Dialect>())
-                    .Mappings(m => m.FluentMappings.AddFromAssemblyOf<User>())
+                    .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Note>())
                     .ExposeConfiguration(c =>
                     {
                         SchemaMetadataUpdater.QuoteTableAndColumns(c);
+                        c.AddDeserializedMapping(MappingHelper.GetIdentityMappings(types), null);
                         c.EventListeners.PreInsertEventListeners = x.Resolve<IPreInsertEventListener[]>();
                         c.EventListeners.PreUpdateEventListeners = x.Resolve<IPreUpdateEventListener[]>();
                     })
@@ -77,7 +83,7 @@ namespace Notezilla.App_Start
                 var conf = cfg.BuildConfiguration();
                 var schemaExport = new SchemaUpdate(conf);
                 schemaExport.Execute(true, true);
-                ISessionFactory session = cfg.BuildSessionFactory();
+                ISessionFactory session = conf.BuildSessionFactory();
                 InitialData(session);
                 return session;
             }).As<ISessionFactory>().SingleInstance();
@@ -103,17 +109,21 @@ namespace Notezilla.App_Start
             app.UseAutofacMiddleware(container);
 
             app.CreatePerOwinContext(() =>
-                new UserManager(new IdentityStore(DependencyResolver.Current.GetServices<ISession>().FirstOrDefault())));
+                new UserManager<User>(new UserStore<User>(DependencyResolver.Current.GetServices<ISession>().FirstOrDefault())));
             app.CreatePerOwinContext(() =>
-                new RoleManager(new RoleStore(DependencyResolver.Current.GetServices<ISession>().FirstOrDefault())));
-            app.CreatePerOwinContext<SignInManager>((options, context) =>
-                new SignInManager(context.GetUserManager<UserManager>(), context.Authentication));
+                new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(DependencyResolver.Current.GetServices<ISession>().FirstOrDefault())));
+            app.CreatePerOwinContext<SignInManager<User, string>>((options, context) =>
+                new SignInManager<User, string>(context.GetUserManager<UserManager<User>>(), context.Authentication));
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Signin"),
-                Provider = new CookieAuthenticationProvider()
+                Provider = new CookieAuthenticationProvider
+                {
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<UserManager<User>, User>(TimeSpan.FromMinutes(1),
+                    (manager, user) => user.GenerateUserIdentityAsync(manager))
+                }
             });
         }
 
@@ -121,10 +131,11 @@ namespace Notezilla.App_Start
         {
             using (ISession session = sessionFactory.OpenSession())
             {
-                var roleAdmin = new Role("Admin");
-                var roleUser = new Role("User");
-                var roleManager = new RoleManager(new RoleStore(session));
-                var userManager = new UserManager(new IdentityStore(session));
+                var roleAdmin = new IdentityRole("Admin");
+                var roleUser = new IdentityRole("User");
+                
+                var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(session));
+                var userManager = new UserManager<User>(new UserStore<User>(session));
                 roleManager.CreateAsync(roleUser);
                 roleManager.CreateAsync(roleAdmin);
                 var userAdmin = new User("admin");
@@ -133,6 +144,7 @@ namespace Notezilla.App_Start
                 {
                     userManager.AddToRoleAsync(userAdmin.Id, roleAdmin.Name);
                     userManager.AddToRoleAsync(userAdmin.Id, roleUser.Name);
+                    userManager.SetLockoutEnabled(userAdmin.Id, false);
                 }
             }
         }

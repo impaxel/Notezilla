@@ -48,6 +48,9 @@
     <Reference Include="NHibernate, Version=5.1.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\NHibernate.5.1.2\lib\net461\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate.AspNet.Identity, Version=5.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.AspNet.Identity.5.0.1\lib\net461\NHibernate.AspNet.Identity.dll</HintPath>
+    </Reference>
     <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>..\packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
     </Reference>
@@ -74,7 +77,6 @@
     <Compile Include="Listeners\PreUpdateNoteEventListener.cs" />
     <Compile Include="Mappings\FileMap.cs" />
     <Compile Include="Mappings\NoteMap.cs" />
-    <Compile Include="Mappings\RoleMap.cs" />
     <Compile Include="Mappings\UserMap.cs" />
     <Compile Include="Notes\File.cs" />
     <Compile Include="Notes\Note.cs" />
@@ -83,7 +85,6 @@
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\RepositoryAttribute.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
-    <Compile Include="Users\Role.cs" />
     <Compile Include="Users\User.cs" />
   </ItemGroup>
   <ItemGroup>

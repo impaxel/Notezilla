@@ -12,7 +12,7 @@ namespace Notezilla.Models.Mappings
     {
         public NoteMap()
         {
-            Id(n => n.Id).GeneratedBy.Identity();
+            Id(n => n.Id);
             Map(n => n.Title).Length(255);
             Map(n => n.Text).Length(int.MaxValue);
             Map(n => n.ChangeDate);

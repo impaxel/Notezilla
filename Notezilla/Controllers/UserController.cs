@@ -26,10 +26,12 @@ namespace Notezilla.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult LockUnlock(long userId)
+        public ActionResult LockUnlock(string userId)
         {
             var user = userRepository.Load(userId);
-            user.IsEnabled = !user.IsEnabled;
+            UserManager.SetLockoutEnabledAsync(userId, true);
+            UserManager.SetLockoutEndDateAsync(userId, DateTimeOffset.MaxValue);
+            UserManager.UpdateSecurityStampAsync(userId);   
             userRepository.Update(user);
             return RedirectToAction("Manage");
         }

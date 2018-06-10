@@ -9,7 +9,7 @@ namespace Notezilla.Models.Notes
 {
     public class Note
     {
-        public virtual long Id { get; set; }
+        public virtual string Id { get; set; }
 
         public virtual string Title { get; set; }
 

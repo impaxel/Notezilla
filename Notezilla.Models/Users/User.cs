@@ -1,38 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
+using NHibernate.AspNet.Identity;
 using Notezilla.Models.Notes;
 
 namespace Notezilla.Models.Users
 {
-    public class User : IUser<long>
+    public class User : IdentityUser
     {
-        public virtual long Id { get; set; }
-
-        public virtual string UserName { get; set; }
-
-        public virtual string Password { get; set; }
-
         public virtual DateTime RegistrationDate { get; set; }
-
-        public virtual ICollection<Role> Roles { get; set; }
 
         public virtual ICollection<Note> Notes { get; set; }
 
-        public virtual bool IsEnabled { get; set; } = true;
-
-        public User()
+        public User() : base()
         {
-            Roles = new List<Role>();
             Notes = new List<Note>();
         }
 
-        public User(string userName) : this()
+        public User(string userName) : base(userName)
         {
-            UserName = userName;
+        }
+
+        public virtual async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User, string> manager)
+        {
+            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            return userIdentity;
         }
     }
 }
