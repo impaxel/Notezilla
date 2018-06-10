@@ -77,16 +77,13 @@ namespace Notezilla.App_Start
                 var conf = cfg.BuildConfiguration();
                 var schemaExport = new SchemaUpdate(conf);
                 schemaExport.Execute(true, true);
-                ISessionFactory session = cfg.BuildSessionFactory();
+                ISessionFactory session = conf.BuildSessionFactory();
                 InitialData(session);
                 return session;
             }).As<ISessionFactory>().SingleInstance();
             builder.Register(x => x.Resolve<ISessionFactory>().OpenSession())
                 .As<ISession>()
                 .InstancePerRequest();
-            //builder.Register(x => x.Resolve<ISessionFactory>().OpenSession())
-            //    .As<ISession>()
-            //    .InstancePerDependency();
             builder.RegisterControllers(Assembly.GetAssembly(typeof(BaseController)));
             builder.RegisterModule(new AutofacWebTypesModule());
             foreach (var type in assembly.GetTypes())

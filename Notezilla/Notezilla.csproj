@@ -161,6 +161,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\summernote.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -171,15 +172,20 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="fonts\summernote.eot" />
+    <Content Include="fonts\summernote.ttf" />
+    <Content Include="fonts\summernote.woff" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrap-tagsinput.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\custom-editor.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\summernote.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -221,7 +227,7 @@
     <Content Include="Views\Note\Create.cshtml" />
     <Content Include="Views\Note\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Note.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Tags.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\NoteTags.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\User\Manage.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\User.cshtml" />
@@ -229,7 +235,9 @@
     <Content Include="Views\Shared\DisplayTemplates\UserStatus.cshtml" />
     <Content Include="Views\Shared\SortLink.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Files.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Title.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\NoteTitle.cshtml" />
+    <Content Include="Views\Note\Details.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\NoteText.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

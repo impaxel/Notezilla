@@ -1,0 +1,10 @@
+﻿@model string
+
+@if (Model.Length > 20)
+{
+    <p title="@Model" style="margin:0 0 0">@Model.Remove(20).Insert(20, "...")</p>
+}
+else
+{
+    @Model
+}

@@ -60,6 +60,17 @@ namespace Notezilla.Controllers
             return View(model);
         }
 
+        public ActionResult Details(long noteId)
+        {
+            var note = noteRepository.Load(noteId);
+            var user = userRepository.GetCurrentUser(User);
+            if (user.Equals(note.Author))
+            {
+                return PartialView("Details", note);
+            }
+            return HttpNotFound();
+        }
+
         // GET: Note
         public ActionResult Index(FetchOptions options)
         {

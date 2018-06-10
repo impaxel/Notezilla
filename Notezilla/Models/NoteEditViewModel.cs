@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Notezilla.Models
 {
@@ -12,6 +13,7 @@ namespace Notezilla.Models
         [Required(ErrorMessage = "Необходимо ввести название заметки")]
         public string Title { get; set; }
 
+        [AllowHtml]
         [Display(Name = "Заметка")]
         [DataType(DataType.MultilineText)]
         public string Text { get; set; }

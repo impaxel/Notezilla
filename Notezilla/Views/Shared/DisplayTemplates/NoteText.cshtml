@@ -1,0 +1,10 @@
+﻿@model string
+
+@if (!string.IsNullOrEmpty(Model))
+{
+    @Html.Raw(Model)
+}
+else
+{
+    <p class="text-primary"><i>Содержимое заметки отсутствует</i></p>
+}

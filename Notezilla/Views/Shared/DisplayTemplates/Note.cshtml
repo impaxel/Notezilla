@@ -2,7 +2,7 @@
 
 <tr>
     <td>
-        <a href="#">@Html.DisplayFor(model => model.Title, "Title")</a>
+        <a href="@Url.Action("Details", new { noteId = Model.Id })" class="note">@Html.DisplayFor(model => model.Title, "NoteTitle")</a>
     </td>
     <td>
         @Html.DisplayFor(model => model.CreationDate)
@@ -11,7 +11,7 @@
         @Html.DisplayFor(model => model.ChangeDate)
     </td>
     <td>
-        @Html.DisplayFor(model => model.Tags, "Tags")
+        @Html.DisplayFor(model => model.Tags, "NoteTags")
     </td>
     <td>
         @Model.Files.Count

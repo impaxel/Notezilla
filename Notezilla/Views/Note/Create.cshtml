@@ -16,7 +16,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", style = "max-width:500px" } })
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", style = "max-width:701px" } })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -24,7 +24,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control", style = "max-width:500px" } })
+                @Html.TextAreaFor(model => model.Text, new { @class = "form-control input-lg textarea-editor" })
                 @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -33,7 +33,7 @@
             @Html.LabelFor(model => model.Tags, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Tags, new { htmlAttributes = new { @data_role = "tagsinput" } })
-                <span class="help-block">Укажите до 5 тегов через запятую</span>
+                <span class="help-block">Можно указать до 5 тегов</span>
                 @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger" })
             </div>
         </div>

@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Notezilla</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/summernote.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap-tagsinput.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
 </head>
 <body>
@@ -46,13 +47,16 @@
         </footer>
     </div>
 
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
     <script src="~/Scripts/bootstrap-tagsinput.js"></script>
+    <script src="~/Scripts/summernote.js"></script>
+    <script src="~/Scripts/custom-editor.js"></script>
     <script>
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
+    @RenderSection("scripts", false)
 </body>
 </html>
