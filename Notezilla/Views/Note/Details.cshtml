@@ -1,6 +1,7 @@
 ﻿@model Notezilla.Models.Notes.Note
 <div class="modal-content">
     <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">@Model.Title</h4>
     </div>
     <div class="modal-body">
@@ -9,9 +10,14 @@
                 @Html.DisplayFor(model => model.Text, "NoteText")
             </div>
         </div>
-        @Html.DisplayFor(model => model.Tags, "NoteTags")
+        <ul class="list-group">
+            @Html.DisplayFor(model => model.Files)
+        </ul>
+            @Html.DisplayFor(model => model.Tags, "NoteTags")
     </div>
     <div class="modal-footer">
+        <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Изменить</a>
+        <a href="@Url.Action("Delete", new { noteId = Model.Id })" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Удалить</a>
         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
     </div>
 </div>

@@ -18,5 +18,8 @@ namespace Notezilla.Models
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Необходимо ввести пароль")]
         public string Password { get; set; }
+
+        [Display(Name = "Запомнить пароль")]
+        public bool RememberMe { get; set; }
     }
 }

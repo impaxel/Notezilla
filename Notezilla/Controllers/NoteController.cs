@@ -31,17 +31,18 @@ namespace Notezilla.Controllers
             if (ModelState.IsValid)
             {
                 var files = new List<Models.Notes.File>();
-                string filePath = Server.MapPath($"~/Uploaded Files/{ User.Identity.Name }/");
-                if (!Directory.Exists(filePath))
+                string serverPath = Server.MapPath($"~/Uploaded Files/{ User.Identity.Name }/");
+                if (!Directory.Exists(serverPath))
                 {
-                    Directory.CreateDirectory(filePath);
+                    Directory.CreateDirectory(serverPath);
                 }
                 foreach (var file in model.Files)
                 {
                     if (file != null)
                     {
                         string fileName = Path.GetFileName(file.FileName);
-                        file.SaveAs(filePath + fileName);
+                        string filePath = Path.Combine(serverPath, fileName);
+                        file.SaveAs(filePath);
                         files.Add(new Models.Notes.File(fileName, filePath));
                     }
                 }
@@ -58,6 +59,18 @@ namespace Notezilla.Controllers
                 return RedirectToAction("Index");
             }
             return View(model);
+        }
+
+        public FileResult Download(string filePath, string fileName)
+        {
+            return File(filePath, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
+        public ActionResult Delete(long noteId)
+        {
+            var note = noteRepository.Load(noteId);
+            noteRepository.Delete(note);
+            return RedirectToAction("Index");
         }
 
         public ActionResult Details(long noteId)

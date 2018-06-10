@@ -30,7 +30,7 @@ namespace Notezilla.Controllers
         {
             if (ModelState.IsValid && !User.Identity.IsAuthenticated)
             {
-                var result = SignInManager.PasswordSignInAsync(model.Login, model.Password, false, false).Result;
+                var result = SignInManager.PasswordSignInAsync(model.Login, model.Password, model.RememberMe, false).Result;
                 switch (result)
                 {
                     case SignInStatus.Success:

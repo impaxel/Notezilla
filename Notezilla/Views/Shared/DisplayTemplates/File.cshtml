@@ -1,0 +1,8 @@
+﻿@model Notezilla.Models.Notes.File
+
+<li class="list-group-item">
+    @Model.Name
+    <div class="pull-right">
+        <a href="@Url.Action("Download", new { filePath = Model.Path, fileName = Model.Name })" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-cloud-download"> Скачать</span></a>
+    </div>
+</li>

@@ -42,6 +42,15 @@ namespace Notezilla.Models.Repositories
             }
         }
 
+        public virtual void Delete(T entity)
+        {
+            using (var tr = session.BeginTransaction())
+            {
+                session.Delete(entity);
+                tr.Commit();
+            }
+        }
+
         protected virtual void SetFetchOptions(ICriteria crit, FetchOptions options)
         {
             if (!string.IsNullOrEmpty(options.SortExpression))

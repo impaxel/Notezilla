@@ -238,6 +238,7 @@
     <Content Include="Views\Shared\DisplayTemplates\NoteTitle.cshtml" />
     <Content Include="Views\Note\Details.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\NoteText.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\File.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
