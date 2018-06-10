@@ -10,6 +10,7 @@ namespace Notezilla.Models
     {
         [Display(Name = "Имя пользователя")]
         [Required(ErrorMessage = "Необходимо указать имя пользователя")]
+        [StringLength(32)]
         public string Login { get; set; }
 
         [Display(Name = "Пароль")]
